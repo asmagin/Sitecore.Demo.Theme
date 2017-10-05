@@ -130,6 +130,7 @@ gulp.task('views', () => {
     return gulp.src(['demo.src/*.html', 'demo.src/layouts/pages/*.html', 'demo.src/layouts/templates/*.html'])
         .pipe($.plumber())
         .pipe($.nunjucksRender({
+            path: 'demo.src/',
             componentsToLoad: componentsJson,
             templatesToLoad: templatesJson
         }))
