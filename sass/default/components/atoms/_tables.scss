@@ -1,6 +1,6 @@
 $table-cell-padding: 12px 15px;
 
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
 
 table, .table {
   .bg-primary &, .bg-secondary &, .bg-dark &, .bg-media & {

@@ -1,25 +1,25 @@
 @import "default/fonts";
 @import "default/variables";
 
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 
 @import "default/mixins";
 
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/print";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/print";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
 
 // Core CSS
 @import "default/scaffolding";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/type";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
 @import "default/grid";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
 @import "default/components/atoms/forms";
 @import "default/components/atoms/buttons";
 
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
 
 @import "default/global";
 
@@ -31,16 +31,16 @@
 @import "default/vendor";
 
 //Components with JS
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/modals";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/popovers";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/carousel";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/popovers";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/carousel";
 
 
 //Extra utilities
 @import "default/helpers";
 @import "default/utilities";
 
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
 
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
