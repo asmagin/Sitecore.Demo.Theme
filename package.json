@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "gulp serve",
-    "start": "gulp serve:demo",
+    "watch": "gulp serve:watch",
+    "start": "gulp build && gulp serve",
     "build": "gulp build"
   },
   "license": "MIT",

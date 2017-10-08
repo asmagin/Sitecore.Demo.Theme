@@ -29,7 +29,7 @@ module.exports = {
       'bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
       'bootstrap-sass/assets/javascripts/bootstrap/tab.js',
       'script-loader!./node_modules/shufflejs/dist/jquery.shuffle.js',
-      'script-loader!./scripts/bootstrap-colequalizer.js',
+      'script-loader!./src/scripts/bootstrap-colequalizer.js',
       'wowjs/dist/wow.js',
       'OwlCarousel/owl-carousel/owl.carousel.js',
       'ekko-lightbox/dist/ekko-lightbox.min.js',
@@ -37,18 +37,18 @@ module.exports = {
       'imagesloaded/imagesloaded.js'
     ],
     'framework': [
-      './scripts/main.js',
-      './scripts/carousel.js',
-      './scripts/counter.js',
-      './scripts/form.js',
-      './scripts/grid.js',
-      './scripts/lightbox.js',
-      './scripts/popover.js',
-      './scripts/search.js',
-      './scripts/sidebar.js',
-      './scripts/theming.js',
-      './scripts/tooltip.js',
-      './scripts/media-query.js'
+      './src/scripts/main.js',
+      './src/scripts/carousel.js',
+      './src/scripts/counter.js',
+      './src/scripts/form.js',
+      './src/scripts/grid.js',
+      './src/scripts/lightbox.js',
+      './src/scripts/popover.js',
+      './src/scripts/search.js',
+      './src/scripts/sidebar.js',
+      './src/scripts/theming.js',
+      './src/scripts/tooltip.js',
+      './src/scripts/media-query.js'
     ],
     'vendor.css': [
       'bootstrap-block-grid/dist/bootstrap3-block-grid.css',
@@ -57,21 +57,24 @@ module.exports = {
       'OwlCarousel/owl-carousel/owl.carousel.css'
     ],
     'default.css': [
-      './sass/index.js',
+      './src/styles/index.js',
     ],
     'niteflight.css': [
-      './sass/niteflight.scss',
+      './src/styles/niteflight.scss',
     ],
     'dayfrost.css': [
-      './sass/dayfrost.scss',
+      './src/styles/dayfrost.scss',
     ],
     'white-wonder.css': [
-      './sass/white-wonder.scss',
+      './src/styles/white-wonder.scss',
+    ],
+    'editors.css': [
+      './src/styles/editors.scss',
     ]
   },
   output: {
     path: __dirname,
-    filename: 'demo/scripts/[name].js',
+    filename: 'dist/scripts/[name].js',
     // library: ['Habitat', '[name]'],
     libraryTarget: 'window'
   },
@@ -79,14 +82,15 @@ module.exports = {
   module: {
     rules: [{
         test: /\.css$/,
+        include: /bootstrap3-block-grid/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader?minimize'
         }),
-        include: /bootstrap3-block-grid/
       },
       {
         test: /\.(s?)css$/,
+        exclude: /bootstrap3-block-grid/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -95,49 +99,48 @@ module.exports = {
             'sass-loader?sourceMap',
           ],
         }),
-        exclude: /bootstrap3-block-grid/
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
+        exclude: /fonts/,
         use: {
           loader: 'file-loader',
           options: {
             name: function (file) {
-              return '/demo/images/[name].[ext]'
+              return '/dist/images/[name].[ext]'
             }
           },
         },
-        exclude: /fonts/
       },
       {
         test: /\.(woff|svg|woff2|eot|ttf|otf)$/,
+        exclude: /node_modules/,
         use: {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: '/demo/fonts/',
+            outputPath: 'dist/fonts/',
             useRelativePath: true,
             publicPath: '/'
           },
         },
-        exclude: /node_modules/
       },
       {
         test: /\.(woff|svg|woff2|eot|ttf|otf)$/,
+        include: /node_modules/,
         use: {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'demo/fonts/',
+            outputPath: 'dist/fonts/',
             publicPath: '/'
           },
         },
-        include: /node_modules/
       },
     ],
   },
   plugins: [
-    new ExtractTextPlugin('demo/styles/[name]'),
+    new ExtractTextPlugin('dist/styles/[name]'),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',

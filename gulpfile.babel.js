@@ -31,13 +31,13 @@ const testLintOptions = {
   }
 };
 
-gulp.task('lint', lint('scripts/**/*.js'));
+gulp.task('lint', lint('src/scripts/**/*.js'));
 
 gulp.task('html', ['nunjucks:configure', 'views'], () => {
-  return gulp.src('demo/*.html')
+  return gulp.src('.tmp/*.html')
     .pipe($.eol())
     .pipe($.useref({
-      searchPath: ['demo.src', '.']
+      searchPath: ['src', '.']
     }))
     .pipe($.uniquePath())
     .pipe($.if(/\.js$/, $.uglify()))
@@ -48,11 +48,11 @@ gulp.task('html', ['nunjucks:configure', 'views'], () => {
       preserveLineBreaks: true
     })))
     .pipe($.eol('\r\n'))
-    .pipe(gulp.dest('demo'));
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('images', () => {
-  return gulp.src('demo.src/images/**/*')
+  return gulp.src('src/images/**/*')
     .pipe($.if($.if.isFile, $.cache($.imagemin({
         progressive: true,
         interlaced: true,
@@ -66,48 +66,48 @@ gulp.task('images', () => {
         console.log(err);
         this.end();
       })))
-    .pipe(gulp.dest('demo/images'));
+    .pipe(gulp.dest('dist/images'));
 });
 
 gulp.task('nunjucks:configure', () => {
-  $.nunjucksRender.nunjucks.configure(['demo.src/'], {
+  $.nunjucksRender.nunjucks.configure(['src/'], {
     watch: false
   });
 });
 
 gulp.task('nunjucks:watch', () => {
-  $.nunjucksRender.nunjucks.configure(['demo.src/'], {
+  $.nunjucksRender.nunjucks.configure(['src/'], {
     watch: true
   });
 });
 
 gulp.task('views', () => {
-  var componentsJson = JSON.parse(fs.readFileSync(__dirname + '/demo.src/components.json'));
-  var templatesJson = JSON.parse(fs.readFileSync(__dirname + '/demo.src/templates.json'));
+  var componentsJson = JSON.parse(fs.readFileSync(__dirname + '/src/components.json'));
+  var templatesJson = JSON.parse(fs.readFileSync(__dirname + '/src/templates.json'));
 
-  $.nunjucksRender.nunjucks.configure(['demo.src/'], {
+  $.nunjucksRender.nunjucks.configure(['src/'], {
     watch: false
   });
 
-  return gulp.src(['demo.src/*.html', 'demo.src/layouts/pages/*.html', 'demo.src/layouts/templates/*.html'])
+  return gulp.src(['src/*.html', 'src/layouts/pages/*.html', 'src/layouts/templates/*.html'])
     // .pipe($.plumber())
     .pipe($.nunjucksRender({
-      path: 'demo.src/',
+      path: 'src/',
       componentsToLoad: componentsJson,
       templatesToLoad: templatesJson
     }))
-    .pipe(gulp.dest('demo'));
+    .pipe(gulp.dest('.tmp'));
 });
 
 gulp.task('extras', () => {
   return gulp.src([
-      'demo.src/*.*',
-      '!demo.src/*.html',
-      '!demo.src/*.json'
+      'src/*.*',
+      '!src/*.html',
+      '!src/*.json'
     ], {
       dot: true
     })
-    .pipe(gulp.dest('demo'));
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task("webpack", function (callback) {
@@ -122,41 +122,42 @@ gulp.task("webpack", function (callback) {
     });
 });
 
-gulp.task('clean', del.bind(null, ['demo']));
+gulp.task('clean', del.bind(null, ['dist']));
 
-gulp.task('serve', ['nunjucks:watch', 'html', 'webpack'], () => {
+gulp.task('serve:watch', ['nunjucks:watch', 'html', 'webpack'], () => {
   browserSync({
     notify: false,
     port: 9000,
     server: {
-      baseDir: ['demo'],
+      baseDir: ['dist'],
     }
   });
 
-  gulp.watch('scripts/**/*.js', ['webpack', reload]);
-  gulp.watch('sass/**/*.scss', ['webpack', reload]);
+  gulp.watch('src/scripts/**/*.js', ['webpack', reload]);
+  gulp.watch('src/styles/**/*.scss', ['webpack', reload]);
   gulp.watch('package.json', ['webpack']);
   gulp.watch('webpack.config.js', ['webpack']);
+  
+  gulp.watch('src/images/**/*', ['images', reload]);
 
-  gulp.watch('demo.src/components.json', ['html', reload]);
-  gulp.watch('demo.src/templates.json', ['html', reload]);
-  gulp.watch('demo.src/images/**/*', ['webpack', reload]);
-  gulp.watch('demo.src/**/*.html', ['html', reload]);
-  gulp.watch('demo.src/**/*.nj', ['html', reload]);
+  gulp.watch('src/components.json', ['html', reload]);
+  gulp.watch('src/templates.json', ['html', reload]);
+  gulp.watch('src/**/*.html', ['html', reload]);
+  gulp.watch('src/**/*.nj', ['html', reload]);
 });
 
-gulp.task('serve:demo', () => {
+gulp.task('serve', () => {
   browserSync({
     notify: false,
     port: 9000,
     server: {
-      baseDir: ['demo']
+      baseDir: ['dist']
     }
   });
 });
 
 gulp.task('build', ['html', 'images', 'webpack', 'extras'], () => {
-  return gulp.src('demo/**/*').pipe($.size({
+  return gulp.src('dist/**/*').pipe($.size({
     title: 'build',
     gzip: true
   }));
